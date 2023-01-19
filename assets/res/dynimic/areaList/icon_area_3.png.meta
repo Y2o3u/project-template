@@ -1,0 +1,46 @@
+{
+  "ver": "1.0.25",
+  "importer": "image",
+  "imported": true,
+  "uuid": "f966a7b4-3d6f-47bf-a43a-020f2e39086c",
+  "files": [
+    ".json",
+    ".png"
+  ],
+  "subMetas": {
+    "6c48a": {
+      "importer": "texture",
+      "uuid": "f966a7b4-3d6f-47bf-a43a-020f2e39086c@6c48a",
+      "displayName": "icon_area_3",
+      "id": "6c48a",
+      "name": "texture",
+      "userData": {
+        "wrapModeS": "clamp-to-edge",
+        "wrapModeT": "clamp-to-edge",
+        "minfilter": "linear",
+        "magfilter": "linear",
+        "mipfilter": "none",
+        "anisotropy": 0,
+        "isUuid": true,
+        "imageUuidOrDatabaseUri": "f966a7b4-3d6f-47bf-a43a-020f2e39086c",
+        "visible": true
+      },
+      "ver": "1.0.22",
+      "imported": true,
+      "files": [
+        ".json"
+      ],
+      "subMetas": {}
+    }
+  },
+  "userData": {
+    "type": "texture",
+    "fixAlphaTransparencyArtifacts": true,
+    "hasAlpha": true,
+    "redirect": "f966a7b4-3d6f-47bf-a43a-020f2e39086c@6c48a",
+    "compressSettings": {
+      "useCompressTexture": true,
+      "presetId": "96YKz9JndKP6IK6ptRwJ/M"
+    }
+  }
+}

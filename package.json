@@ -1,0 +1,15 @@
+{
+  "name": "project-template",
+  "uuid": "7903d815-0a4b-46d8-9f37-1ca0485b4aa1",
+  "version": "3.6.2",
+  "creator": {
+    "version": "3.6.2"
+  },
+  "dependencies": {
+    "@types/node": "^18.11.18",
+    "dayjs": "^1.11.7"
+  },
+  "devDependencies": {
+    "mobx": "^6.3.2"
+  }
+}
