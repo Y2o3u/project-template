@@ -8,8 +8,6 @@ specifiers:
 dependencies:
   '@types/node': 18.11.18
   dayjs: 1.11.7
-
-devDependencies:
   mobx: 6.3.2
 
 packages:
@@ -24,4 +22,4 @@ packages:
 
   /mobx/6.3.2:
     resolution: {integrity: sha512-xGPM9dIE1qkK9Nrhevp0gzpsmELKU4MFUJRORW/jqxVFIHHWIoQrjDjL8vkwoJYY3C2CeVJqgvl38hgKTalTWg==}
-    dev: true
+    dev: false

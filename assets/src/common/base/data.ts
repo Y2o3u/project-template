@@ -1,3 +1,4 @@
+import { observable } from "mobx";
 import { singleton } from "../util/singleton";
 import { BaseObject } from "./base-object";
 
@@ -5,6 +6,9 @@ export type Type<T> = { new (...arg): T };
 
 /** 数据基类 */
 export abstract class Data<T = any> extends BaseObject {
+  /** 缓存数据,mobx对象*/
+  abstract cache;
+
   /** 数据初始化 */
   protected init() {}
 

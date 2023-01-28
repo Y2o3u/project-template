@@ -1,8 +1,14 @@
 import { Component } from "cc";
 import { IDisposable, dispose } from "../util/disposable";
-import * as mobx from "mobx";
-import { BaseObject } from "./base-object";
 import { CountDown, CountDownOptional } from "../component/count-down";
+import {
+  IAutorunOptions,
+  IReactionOptions,
+  IReactionPublic,
+  IWhenOptions,
+  Lambda,
+} from "mobx";
+import { autorun, reaction, when } from "../util/mobx";
 
 /**
  * 基础组件
@@ -13,7 +19,6 @@ export class BaseComponent extends Component {
   disposableArr: IDisposable[] = [];
   constructor() {
     super();
-    // mobx.default.makeObservable(this);
   }
 
   /** 添加到待释放中 */
@@ -32,8 +37,54 @@ export class BaseComponent extends Component {
     }
   }
 
-  /** 开启一个自动监听 */
-  autoRun(view: (r) => any, opts?) {}
+  /**
+   * 自执行函数、自动收集view中使用到的参数值，发生变化自动调用
+   * @param view 创建时以及收集的数值变化时生效
+   * @param opts
+   * @returns
+   */
+  autorun(
+    view: (r: IReactionPublic) => any,
+    opts?: IAutorunOptions
+  ): IDisposable {
+    let disposeObj = {
+      dispose: autorun(view, opts),
+    };
+    this.addDisposable(disposeObj);
+    return disposeObj;
+  }
+
+  /**
+   * autorun的变种，提供更细粒度的控制，且创建时不生效
+   * @param expression
+   * @param effect 创建时并不立即生效，第一次发生变化时才生效
+   * @param opts
+   * @returns
+   */
+  reaction(
+    expression: (r: IReactionPublic) => unknown,
+    effect: (arg: unknown, prev: unknown, r: IReactionPublic) => void,
+    opts?: IReactionOptions
+  ) {
+    const disposeObj = {
+      dispose: reaction(expression, effect, opts),
+    };
+    return disposeObj;
+  }
+
+  /**
+   * 当满足条件时，自动执行effect函数
+   * @param predicate
+   * @param effect
+   * @param opts
+   * @returns
+   */
+  when(predicate: () => boolean, effect: Lambda, opts?: IWhenOptions) {
+    const disposeObj = {
+      dispose: when(predicate, effect, opts),
+    };
+    return disposeObj;
+  }
 
   /**
    * 开启一个计时器
@@ -70,7 +121,8 @@ export class BaseComponent extends Component {
     this.addDisposable(disposeObj);
   }
 
-  /**启动一个倒计时的计时器，计时器每隔一定时间执行一次，到达某个目标后自动停止
+  /**
+   * 启动一个倒计时的计时器，计时器每隔一定时间执行一次，到达某个目标后自动停止
    * @param callback 计时器每次执行的回调函数
    * @param start 计数的数字开始的大小
    * @param optional 可选参数

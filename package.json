@@ -7,9 +7,7 @@
   },
   "dependencies": {
     "@types/node": "^18.11.18",
-    "dayjs": "^1.11.7"
-  },
-  "devDependencies": {
+    "dayjs": "^1.11.7",
     "mobx": "^6.3.2"
   }
 }

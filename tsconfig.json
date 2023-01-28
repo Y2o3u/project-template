@@ -4,7 +4,7 @@
 
   /* Add your custom configuration here. */
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "ES5",
     "resolveJsonModule": true,
     "strict": false,
     "types": ["node"],

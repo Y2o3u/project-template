@@ -8,6 +8,8 @@ local/
 build/
 profiles/
 native
+.DS_Store/
+.bash_profile/
 #//////////////////////////
 # NPM
 #//////////////////////////
@@ -22,3 +24,4 @@ node_modules/
 # WebStorm
 #//////////////////////////
 .idea/
+
