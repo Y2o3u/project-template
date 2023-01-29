@@ -1,10 +1,17 @@
 import { Data } from "../common/base/data";
 import { globally } from "../common/util/decorator";
-import { CommonModule } from "./index";
+import { CommonModule, GameModule } from "./index";
+import viewMapJson from "../../src/config/view-map.json";
+
+export { GameModule, CommonModule };
 
 export type PromiseModule<T> = T extends () => Promise<infer V> ? V : never;
 
+/** 通用模块类型 */
 export type CommonModuleType = typeof CommonModule;
+
+/** 游戏功能模块类型 */
+export type GameModuleType = typeof GameModule;
 
 export type DataModule = PromiseModule<CommonModuleType["Data"]>;
 
@@ -34,6 +41,20 @@ export function getCommonModule<K extends keyof CommonModuleType>(
   key: K
 ): ModuleValue<CommonModuleType[K]> {
   return CommonModule[key]() as any;
+}
+
+/** 获取游戏功能模块 */
+export function getGameModule<K extends keyof GameModuleType>(
+  key: K
+): ModuleValue<GameModuleType[K]> {
+  return GameModule[key]() as any;
+}
+
+/** 获取一个模块中包含的界面 */
+export function getViewInfo(view: string) {
+  const module = viewMapJson[view];
+  const r = getGameModule(module) as Promise<any>;
+  return r.then((mobj) => mobj[view]);
 }
 
 /** 通过代理方式获取数据类实例 */
