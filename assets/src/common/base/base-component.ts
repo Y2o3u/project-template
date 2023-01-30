@@ -9,6 +9,9 @@ import {
   Lambda,
 } from "mobx";
 import { autorun, reaction, when } from "../util/mobx";
+import { emitter } from "../event/event-mgr";
+import { eventNames } from "process";
+import EventEmitter from "eventemitter3";
 
 /**
  * 基础组件
@@ -134,6 +137,62 @@ export class BaseComponent extends Component {
     optional: CountDownOptional = {}
   ) {
     return new CountDown(this, callback, start, optional);
+  }
+
+  /** 事件监听 */
+  on<T extends EventObjectParam<any>>(
+    event: T,
+    listener: (...args: PickDep<T>) => void,
+    context?
+  ): void;
+  on(event: string, ...args: any): void;
+  on(...args) {
+    let curEmitter: EventEmitter;
+    let event: string;
+    let listener: () => any;
+    let context;
+    if (args[0]["_kind"] == "e") {
+      curEmitter = args[0]["emitter"];
+      event = args[0].event;
+      listener = args[1];
+      context = args[2];
+    } else {
+      curEmitter = emitter;
+      event = args[0];
+      listener = args[1];
+      context = args[2];
+    }
+    curEmitter.on(event, listener, context);
+    let disposeObj = {
+      dispose() {
+        curEmitter.off(event, listener, this);
+      },
+    };
+    this.addDisposable(disposeObj);
+  }
+
+  /**
+   * 事件发送
+   * @param event
+   * @param arg
+   * this.emit(E.pet.updateName, 'name')
+   */
+  emit<T extends EventObjectParam<any>>(event: T, ...args: PickDep<T>): void;
+  emit(event: string, ...args: any): void;
+  emit(...args: any): void {
+    let curEmitter: EventEmitter;
+    let event: string;
+    let allArgs: any[];
+    if ((args[0]["_kind"] = "e")) {
+      curEmitter = args[0].emitter;
+      event = args[0].event;
+      allArgs = args.slice(1);
+    } else {
+      curEmitter = emitter;
+      event = args[0];
+      allArgs = args.slice(1);
+    }
+    curEmitter.emit(event, ...allArgs);
   }
 
   /** 释放 */

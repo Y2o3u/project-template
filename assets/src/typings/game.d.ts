@@ -1,4 +1,4 @@
-import { View } from "../../common/base/view";
+import { View } from "../common/base/view";
 
 export interface IShowWidgetOpts {
   stackTopMode: boolean;

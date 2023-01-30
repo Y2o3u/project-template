@@ -8,6 +8,7 @@
   "dependencies": {
     "@types/node": "^18.11.18",
     "dayjs": "^1.11.7",
+    "eventemitter3": "^5.0.0",
     "mobx": "^6.3.2"
   }
 }

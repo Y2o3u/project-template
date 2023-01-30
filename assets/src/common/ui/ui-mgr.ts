@@ -5,12 +5,16 @@ import {
   PickAndFlatten,
   RealGameModuleType,
   ViewList,
-} from "../../type/common/game";
+} from "../../typings/game";
+import { View } from "../base/view";
 import { globally } from "../util/decorator";
 import { singleton } from "../util/singleton";
 
 /** ui管理 */
-export class UIManager {
+export class UIMgr {
+  /** 所有已经打开的界面 */
+  static uiMap: View[] = [];
+
   /** 打开一个界面 */
   async open<
     T extends RealGameModuleType<GameModuleType>,
@@ -19,13 +23,15 @@ export class UIManager {
     X extends { onInit(...args): void }
   >(viewName: K, ...arg: Param<Cls<U[K], X>>) {
     console.log("打开一个界面");
-    let cls = await getViewInfo(viewName as string);
+    let viewComp = await getViewInfo(viewName as string);
+    let viewInfo = viewComp.viewInfo;
+    let path = viewInfo.path;
   }
 
   /** 关闭一个界面 */
   close() {}
 }
 
-const ui = singleton(UIManager);
+const ui = singleton(UIMgr);
 export default ui;
 globally("ui", ui);

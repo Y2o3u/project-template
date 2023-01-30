@@ -2,6 +2,7 @@ import { _decorator } from "cc";
 import { View } from "../../common/base/view";
 import { mobx } from "../../common/util/mobx";
 import { GData } from "../../module/get-module";
+import ui from "../../common/ui/ui-mgr";
 
 const { ccclass, property } = _decorator;
 
@@ -16,7 +17,8 @@ export class Test extends View {
     this.autorun(() => {
       console.log(petData.lv);
     });
-
+    this.on(E.pet.updateName, this.updateStr, this);
+    this.emit(E.pet.updateName, "yyyy");
     // this.when(
     //   () => this.data.lv > 10,
     //   () => {
@@ -24,8 +26,15 @@ export class Test extends View {
     //   }
     // );
 
-    petData.lv = 100;
+    // petData.lv = 100;
+    // console.log(E.pet);
+    // console.log(E.pet.updateName);
+    // this.emit(E.pet.updateName, "1");
   }
 
   update(deltaTime: number) {}
+
+  updateStr(name: string) {
+    console.log("update pet name", name);
+  }
 }
